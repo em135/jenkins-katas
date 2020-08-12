@@ -23,7 +23,7 @@ pipeline {
             sh 'ls'
             deleteDir()
             sh 'ls'
-            unstash 'unstash'
+            unstash 'code'
           }
         }
 
