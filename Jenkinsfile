@@ -1,6 +1,11 @@
 pipeline {
   agent any
   stages {
+    stage('clone down') {
+        steps {
+        stash(name: 'code', excludes: '.git')
+        }
+    }
     stage('Say Hello') {
       parallel {
         stage('Parallel execution') {
@@ -45,19 +50,13 @@ pipeline {
             junit 'app/build/test-results/test/TEST-*.xml'
           }
         }
-
-        stage('clone down') {
-          steps {
-            stash(name: 'code', excludes: '.git')
-          }
-        }
-
       }
     }
-    post {
-      always {
-        deleteDir() /* clean up our workspace */
-      }
+  }
+  post {
+    always {
+      deleteDir() /* clean up our workspace */
+    }
   }
   
 }
