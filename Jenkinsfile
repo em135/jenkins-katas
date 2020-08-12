@@ -79,7 +79,7 @@ pipeline {
     stage('component test') {
      when {
       not {
-         expression { BRANCH_NAME ==~ /dev\/[0-9]+\.[0-9]+\.[0-9]+/ }
+         branch "dev/**"
       }
     }
       steps {
