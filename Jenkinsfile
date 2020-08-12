@@ -16,7 +16,7 @@ pipeline {
             }
 
           }
-          environment {
+          options {
             skipDefaultCheckout = 'true'
           }
           steps {
