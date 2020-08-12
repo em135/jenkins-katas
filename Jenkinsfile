@@ -56,6 +56,9 @@ pipeline {
     }
 
   }
+  environment {
+    docker_username = 'em135'
+  }
   post {
     always {
       deleteDir()
