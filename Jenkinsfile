@@ -82,9 +82,11 @@ pipeline {
          branch "dev/**"
       }
     }
-      steps {
-        sh 'ci/component-test.sh'
-      }
+    when { changeRequest() }
+     steps {
+       sh 'echo "this is a change request"'
+       sh 'ci/component-test.sh'
+     }
     }
 
   }
