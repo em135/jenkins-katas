@@ -29,6 +29,7 @@ pipeline {
             unstash 'code'
             sh 'ci/build-app.sh'
             archiveArtifacts 'app/build/libs/'
+            stash 'code'
             sh 'ls'
             deleteDir()
             sh 'ls'
