@@ -24,8 +24,9 @@ public class HelloControllerTest {
         HttpRequest<String> request = HttpRequest.GET("/hello/sofus"); 
         String body = client.toBlocking().retrieve(request);
 
+
         assertNotNull(body);
-        assertEquals("Hello BOB", body);
+        assertEquals("Hello sofus", body);
     }
     @Test
     public void testCombineName() {
