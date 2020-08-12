@@ -2,10 +2,11 @@ pipeline {
   agent any
   stages {
     stage('clone down') {
-        steps {
+      steps {
         stash(name: 'code', excludes: '.git')
-        }
+      }
     }
+
     stage('Say Hello') {
       parallel {
         stage('Parallel execution') {
@@ -22,7 +23,7 @@ pipeline {
 
           }
           options {
-            skipDefaultCheckout true
+            skipDefaultCheckout(true)
           }
           steps {
             unstash 'code'
@@ -33,7 +34,7 @@ pipeline {
             sh 'ls'
           }
         }
-        
+
         stage('Test app') {
           agent {
             docker {
@@ -42,7 +43,7 @@ pipeline {
 
           }
           options {
-            skipDefaultCheckout true
+            skipDefaultCheckout(true)
           }
           steps {
             unstash 'code'
@@ -50,13 +51,15 @@ pipeline {
             junit 'app/build/test-results/test/TEST-*.xml'
           }
         }
+
       }
     }
+
   }
   post {
     always {
-      deleteDir() /* clean up our workspace */
+      deleteDir()
     }
+
   }
-  
 }
