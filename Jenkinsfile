@@ -75,6 +75,17 @@ pipeline {
         sh 'ci/push-docker.sh'
       }
     }
+    
+    stage('component test') {
+     when {
+      not {
+         expression { BRANCH_NAME ==~ /dev\/[0-9]+\.[0-9]+\.[0-9]+/ }
+      }
+    }
+      steps {
+        sh 'ci/component-test.sh'
+      }
+    }
 
   }
   environment {
