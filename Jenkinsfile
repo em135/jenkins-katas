@@ -22,6 +22,7 @@ pipeline {
             sh 'ls'
             deleteDir()
             sh 'ls'
+            bat label: '', script: 'echo "snip gen"'
           }
         }
 
