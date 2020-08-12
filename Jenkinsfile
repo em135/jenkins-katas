@@ -16,8 +16,10 @@ pipeline {
             }
 
           }
+          environment {
+            skipDefaultCheckout = 'true'
+          }
           steps {
-            skipDefaultCheckout true
             sh 'ci/build-app.sh'
             archiveArtifacts 'app/build/libs/'
             sh 'ls'
