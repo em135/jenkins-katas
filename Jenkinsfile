@@ -6,7 +6,7 @@ pipeline {
         stash(name: 'code', excludes: '.git')
       }
     }
-
+  
     stage('Say Hello') {
       parallel {
         stage('Parallel execution') {
@@ -69,9 +69,11 @@ pipeline {
     }
 
   }
+  
   environment {
     docker_username = 'em135'
   }
+  
   post {
     always {
       deleteDir()
