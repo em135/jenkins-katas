@@ -57,9 +57,7 @@ pipeline {
     }
 
     stage('build docker') {
-      environment {
-        DOCKERCREDS = credentials('docker_login')
-      }
+
       steps {
         unstash 'code'
         sh 'ci/build-docker.sh'
@@ -67,7 +65,12 @@ pipeline {
     }
 
     stage('push docker') {
+      when { branch "master" }
+      environment {
+        DOCKERCREDS = credentials('docker_login')
+      }
       steps {
+        sh 'Echo "On master branch"'
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
         sh 'ci/push-docker.sh'
       }
