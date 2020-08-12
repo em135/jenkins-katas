@@ -51,21 +51,21 @@ pipeline {
             junit 'app/build/test-results/test/TEST-*.xml'
           }
         }
+
       }
     }
-    
+
     stage('push docker app') {
       environment {
-        DOCKERCREDS = credentials('docker_login') //use the credentials just created in this stage
+        DOCKERCREDS = credentials('docker_login')
       }
       steps {
-        unstash 'code' //unstash the repository code
+        unstash 'code'
         sh 'ci/build-docker.sh'
-        sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin' //login to docker hub with the credentials above
+        sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
         sh 'ci/push-docker.sh'
       }
     }
-    
 
   }
   environment {
