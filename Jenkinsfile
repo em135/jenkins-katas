@@ -6,7 +6,7 @@ pipeline {
         stash(name: 'code', excludes: '.git')
       }
     }
-  
+
     stage('Say Hello') {
       parallel {
         stage('Parallel execution') {
@@ -56,24 +56,27 @@ pipeline {
       }
     }
 
-    stage('push docker app') {
+    stage('build docker') {
       environment {
         DOCKERCREDS = credentials('docker_login')
       }
       steps {
         unstash 'code'
         sh 'ci/build-docker.sh'
+      }
+    }
+
+    stage('push docker') {
+      steps {
         sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
         sh 'ci/push-docker.sh'
       }
     }
 
   }
-  
   environment {
     docker_username = 'em135'
   }
-  
   post {
     always {
       deleteDir()
